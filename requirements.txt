@@ -1,0 +1,15 @@
+# Core dependencies
+chromadb>=0.4.22  # Vector database for memory storage
+numpy>=1.24.0  # Numerical computing for embeddings and processing
+tqdm>=4.66.1  # Progress bar for debugging and batch operations
+python-dotenv>=1.0.1  # Manage environment variables (optional)
+
+# Logging & Debugging
+loguru>=0.7.2  # Advanced logging for better debugging
+
+# Embedding Models (Optional, but useful for advanced retrieval)
+sentence-transformers>=2.2.2  # Pre-trained embedding models for similarity search
+torch>=2.0.0  # Required for sentence-transformers and ML-based improvements
+
+# Future-Proofing (If I integrate LLM-based reasoning or advanced AI logic)
+transformers>=4.38.0  # Hugging Face model support (if I expand reasoning capabilities)
