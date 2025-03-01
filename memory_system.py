@@ -12,22 +12,22 @@ def store_memory(content, weight=1.0, tags=None):
 
     tags = tags or []
 
-    # Convert tags list to a string (comma-separated) since ChromaDB does not support lists
+    # Convert tags list to a string
     tag_string = ",".join(tags) if tags else ""
 
-    # 🔹 Step 1: Retrieve **all stored memories** and check for an exact match
+    # Retrieve all stored memories and check for an exact match
     existing_memories = collection.get()["documents"]
 
     if content in existing_memories:
-        print("⚠ Memory already exists, skipping storage.")
+        print("Memory already exists, skipping storage.")
         return None  # Avoid duplicates
 
-    # 🔹 Step 2: Generate a unique ID and store new memory
+    # Generate a unique ID and store new memory
     memory_id = str(uuid.uuid4())
     metadata = {"timestamp": time.time(), "weight": weight, "tags": tag_string}
 
     collection.add(ids=[memory_id], metadatas=[metadata], documents=[content])
-    print(f"📝 Memory stored: {content} (ID: {memory_id})")
+    print(f"Memory stored: {content} (ID: {memory_id})")
     return memory_id
 
 
@@ -46,24 +46,24 @@ def retrieve_memories(query, n_results=5):
     retrieved_memories = list(set(results["documents"][0]))  # Remove duplicates
     retrieved_metadata = results.get("metadatas", [[]])[0]  # Default to empty list if missing
 
-    # 🔹 Step 1: Sort by weight (higher = better) and timestamp (newer = better)
+    # Sort by weight (higher = better) and timestamp (newer = better)
     sorted_memories = sorted(
         zip(retrieved_memories, retrieved_metadata),
         key=lambda x: (x[1].get("weight", 1.0), x[1].get("timestamp", 0)),  # Defaults for safety
         reverse=True
     )
 
-    # 🔹 Step 2: Extract sorted results
+    #  Extract sorted results
     final_memories = [mem[0] for mem in sorted_memories]
 
-    # 🔹 Step 3: **Detect Auto-Linking** (When two memories are often retrieved together)
+    # Detect Auto-Linking (When two memories are often retrieved together)
     top_memory = final_memories[0] if final_memories else None
     linked_memories = final_memories[1:] if len(final_memories) > 1 else []
 
     if linked_memories:
-        print(f"🔗 Auto-Linking: {top_memory} ↔ {linked_memories}")
+        print(f"Auto-Linking: {top_memory} ↔ {linked_memories}")
 
-    print(f"🔍 Retrieved memories → Top Memory: {top_memory} | Linked Memories: {linked_memories}")
+    print(f"Retrieved memories → Top Memory: {top_memory} | Linked Memories: {linked_memories}")
     return final_memories
 
 
@@ -73,18 +73,18 @@ def update_memory(memory_id, new_content, weight=None):
     memory = collection.get(ids=[memory_id])
 
     if not memory["documents"]:  # Ensure the memory exists
-        print("⚠️ Memory not found.")
+        print("Memory not found.")
         return
 
     existing_content = memory["documents"][0]
 
     if existing_content == new_content:
-        print("⚠ No changes detected. Update skipped.")
+        print("No changes detected. Update skipped.")
         return  # Skip update if content is unchanged
 
     metadata = memory["metadatas"][0]
 
-    # 🔹 If weight is not provided, **keep existing weight**
+    # If weight is not provided, keep existing weight
     if weight is None:
         weight = metadata.get("weight", 1.0)  # Default to 1.0 if missing
 
@@ -92,15 +92,15 @@ def update_memory(memory_id, new_content, weight=None):
 
     collection.update(ids=[memory_id], metadatas=[metadata], documents=[new_content])
 
-    print(f"🔄 Memory updated: {new_content}")
+    print(f"Memory updated: {new_content}")
 
 
-# ✅ **Testing the refined memory system**
-test_id = store_memory("You love lilac-colored things.", weight=1.5, tags=["preference"])
+# Testing the refined memory system
+test_id = store_memory("You love lilac-colored things.", weight=1.5, tags=["preference"]) # Replace with memory you want to test
 retrieve_memories("lilac")
 
 if test_id:  # Only update if a new memory was actually stored
-    update_memory(test_id, "You love lilac and soft pastel colors.")
+    update_memory(test_id, "You love lilac and soft pastel colors.") # Replace with your own updated memory to test
 
 retrieve_memories("pastel")
 
