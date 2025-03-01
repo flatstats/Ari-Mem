@@ -1,11 +1,78 @@
-# Ari-Living-Framework
+# Ari-Mem the Adaptive AI Memory System
 
-What this project is:
-This is an ongoing experiment in creating an AI framework involving memory, continuity, and adpation that will shape how AI learns and generates ideas. 
-Currently I have a memory system intended to be integrated in LLMs, but right now it functions on its own but in my base model I am using.
-The current set up is Mistral 7B base v3 with no fine tuning, but I intend to fine tune on fundamental skills to create a backbone for growth organically. 
+## Overview
 
-Current problem: The base model currently struggles eith using the memory efficiently without fine tuning which is causing endless looping.  Without basic understanding of context,
-the base model will loop responses over and over and add memory with no understanding of the weighting system. 
+This project is an adaptive memory system designed to enhance AI reasoning by introducing long-term context retention, weighted prioritization, and contextual linking. It enables AI models to remember, retrieve, and evolve knowledge over time, bridging the gap between static recall and dynamic cognition.
 
-Next steps: Fine tuning on small datasets to teach the model how to utilize memory and basic learning and communicating skills using loRA.
+## Why It Matters
+
+Most AI models lack true memory—they rely solely on input context, forgetting previous interactions. This system aims to change that by providing:
+
+- **Contextual Awareness** – Memories are retrieved based on similarity and weighted importance.
+- **Dynamic Learning** – Stored knowledge adapts based on usage and updates over time.
+- **Persistent Reasoning** – Enables AI to recall key insights across sessions.
+
+## Features
+
+- **Weighted Memory Storage** – Prioritizes frequently referenced or critical information.
+- **Adaptive Retrieval** – Returns the most relevant memories while maintaining diversity.
+- **Contextual Linking** – Connects related memories to build an evolving knowledge network.
+- **Self-Optimizing Updates** – Avoids redundancy while refining stored knowledge.
+
+## Quick Start
+
+### Installation
+
+```bash
+pip install -r requirements.txt
+```
+
+### Usage
+
+#### Store a Memory
+
+```python
+from memory_system import store_memory
+
+store_memory("You love lilac-colored things.", weight=1.5, tags=["preference"])
+```
+
+#### Retrieve Memories
+
+```python
+from memory_system import retrieve_memories
+
+retrieve_memories("lilac")
+```
+
+#### Update a Memory
+
+```python
+from memory_system import update_memory
+
+update_memory(memory_id, "You love lilac and soft pastel colors.")
+```
+
+## Potential Applications
+
+- **Personal AI Assistants** – Retaining user preferences and evolving over time.
+- **Research & Analysis** – Storing insights for progressive refinement.
+- **Conversational AI** – Maintaining context beyond a single chat session.
+
+## Future Enhancements
+
+- **Integration with Local/Cloud LLMs** – Connecting to OpenAI models for deeper reasoning.
+- **Multimodal Memory** – Expanding beyond text to support images, audio, and structured data.
+- **Reinforcement Learning Framework** – Allowing memory to influence AI decision-making.
+
+## Contributing
+
+Contributions are welcome! Feel free to open an issue or submit a pull request.
+
+## License
+
+MIT License.
+
+---
+
+This is a **work in progress**, but the goal is clear: creating AI that doesn’t just process data, but **remembers, adapts, and grows**.
