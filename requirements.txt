@@ -13,3 +13,4 @@ torch>=2.0.0  # Required for sentence-transformers and ML-based improvements
 
 # Future-Proofing (If I integrate LLM-based reasoning or advanced AI logic)
 transformers>=4.38.0  # Hugging Face model support (if I expand reasoning capabilities)
+ 
